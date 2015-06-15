@@ -34,7 +34,7 @@ vagrantfile:
                     - '--parser future'
         synced_folder:
             vflsf_fpt1zsnqw88l:
-                source: ../
+                source: ../todo
                 target: /var/www/todo
                 sync_type: default
                 smb:
@@ -147,7 +147,7 @@ apache:
         - proxy_fcgi
         - rewrite
     vhosts:
-        av_bcyu2vrb4pw2:
+        todo:
             servername: todo.local
             serveraliases:
                 - www.todo.local
@@ -295,7 +295,12 @@ mysql:
     grants:
         mysqlng_jazkol9syu30:
             user: doer
-            table: 'todo.*,test_todo.*'
+            table: 'todo.*'
+            privileges:
+                - ALL
+        mysqlng_abcdefg:
+            user: doer
+            table: 'test_todo.*'
             privileges:
                 - ALL
 postgresql:

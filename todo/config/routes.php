@@ -21,6 +21,8 @@
 use Cake\Core\Plugin;
 use Cake\Routing\Router;
 
+Router::extensions(['json']);
+
 /**
  * The default class to use for all routes
  *

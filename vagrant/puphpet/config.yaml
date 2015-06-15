@@ -10,8 +10,8 @@ vagrantfile:
         network:
             private_network: 192.168.56.106
             forwarded_port:
-                vflnp_1hug9uxg3qwt:
-                    host: '6594'
+                vflnp_2jxjtim33sw7:
+                    host: '5479'
                     guest: '22'
         post_up_message: ''
         provider:
@@ -33,7 +33,7 @@ vagrantfile:
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
                     - '--parser future'
         synced_folder:
-            vflsf_kulr1dy85lsl:
+            vflsf_fpt1zsnqw88l:
                 source: ../
                 target: /var/www/todo
                 sync_type: default
@@ -90,11 +90,11 @@ nginx:
         proxy_buffers: '4 256k'
     upstreams: {  }
     vhosts:
-        nxv_rjaez0v3zvu3:
-            server_name: privatebank.dev
+        nxv_yhlddolp6mp7:
+            server_name: awesome.dev
             server_aliases:
-                - www.privatebank.dev
-            www_root: /var/www/privatebank-web/private_bank
+                - www.awesome.dev
+            www_root: /var/www/awesome
             listen_port: '80'
             index_files:
                 - index.html
@@ -104,9 +104,35 @@ nginx:
             ssl: '0'
             ssl_cert: ''
             ssl_key: ''
-            ssl_port: ''
+            ssl_port: '443'
             ssl_protocols: ''
             ssl_ciphers: ''
+            rewrite_to_https: '1'
+            spdy: '1'
+            locations:
+                nxvl_zf6tyrxzm380:
+                    location: /
+                    autoindex: off
+                    try_files:
+                        - $uri
+                        - $uri/
+                        - /index.php$is_args$args
+                    fastcgi: ''
+                    fastcgi_index: ''
+                    fastcgi_split_path: ''
+                nxvl_psnto3zb4dif:
+                    location: '~ \.php$'
+                    autoindex: off
+                    try_files:
+                        - $uri
+                        - $uri/
+                        - /index.php$is_args$args
+                    fastcgi: '127.0.0.1:9000'
+                    fastcgi_index: index.php
+                    fastcgi_split_path: '^(.+\.php)(/.*)$'
+                    fast_cgi_params_extra:
+                        - 'SCRIPT_FILENAME $request_filename'
+                        - 'APP_ENV dev'
     proxies: {  }
 apache:
     install: '1'
@@ -118,9 +144,10 @@ apache:
         manage_group: false
         sendfile: 0
     modules:
+        - proxy_fcgi
         - rewrite
     vhosts:
-        av_3e40advur8ya:
+        av_bcyu2vrb4pw2:
             servername: todo.local
             serveraliases:
                 - www.todo.local
@@ -137,7 +164,7 @@ apache:
             ssl_protocol: ''
             ssl_cipher: ''
             directories:
-                avd_8ng60e24k2ln:
+                avd_h0l7dvr0uu7s:
                     path: /var/www/todo/webroot
                     options:
                         - Indexes
@@ -146,9 +173,14 @@ apache:
                     allow_override:
                         - All
                     require:
-                        - all
-                        - granted
+                        - 'all granted'
                     custom_fragment: ''
+                    files_match:
+                        avdfm_qh7ovi5fd2jv:
+                            path: \.php$
+                            sethandler: 'proxy:fcgi://127.0.0.1:9000'
+                            custom_fragment: ''
+                            provider: filesmatch
                     provider: directory
 php:
     install: '1'
@@ -157,7 +189,6 @@ php:
     modules:
         php:
             - cli
-            - gd
             - intl
             - mcrypt
             - mbstring
@@ -168,9 +199,17 @@ php:
         display_errors: On
         error_reporting: '-1'
         session.save_path: /var/lib/php/session
+        date.timezone: UTC
     fpm_ini:
         error_log: /var/log/php-fpm.log
-    fpm_pools: {  }
+    fpm_pools:
+        phpfp_1zu9jv2d5di0:
+            ini:
+                prefix: www
+                listen: '127.0.0.1:9000'
+                security.limit_extensions: .php
+                user: www-user
+                group: www-data
     composer: '1'
     composer_home: ''
 xdebug:
@@ -206,21 +245,17 @@ xhprof:
     install: '0'
 wpcli:
     install: '0'
-    version: ''
+    version: v0.19.0
 drush:
     install: '0'
     version: 6.3.0
 ruby:
     install: '1'
-    versions:
-        rv_b7hirznob175:
-            version: ''
+    versions: {  }
 python:
     install: '1'
     packages: {  }
-    versions:
-        pyenv_yaf3ftkt7uw3:
-            version: 2.6.9
+    versions: {  }
 nodejs:
     install: '0'
     npm_packages: {  }
@@ -230,8 +265,15 @@ hhvm:
     composer: '1'
     composer_home: ''
     settings: {  }
-    server_ini: {  }
-    php_ini: {  }
+    server_ini:
+        hhvm.server.host: 127.0.0.1
+        hhvm.server.port: '9000'
+        hhvm.log.use_log_file: '1'
+        hhvm.log.file: /var/log/hhvm/error.log
+    php_ini:
+        display_errors: On
+        error_reporting: '-1'
+        date.timezone: UTC
 mysql:
     install: '1'
     settings:
@@ -239,15 +281,23 @@ mysql:
         root_password: P@55w0rd
         override_options: {  }
     adminer: 0
-    users: {  }
+    users:
+        mysqlnu_34h75fqd5smd:
+            name: doer
+            password: P@55w0rd
     databases:
-        mysqlnd_g50zs4np0fs0:
+        mysqlnd_5j7bmjugtqmn:
             name: todo
             sql: ''
-        mysqlnd_v6bjn57ib970:
+        mysqlnd_742rb8r8dles:
             name: test_todo
             sql: ''
-    grants: {  }
+    grants:
+        mysqlng_jazkol9syu30:
+            user: doer
+            table: 'todo.*,test_todo.*'
+            privileges:
+                - ALL
 postgresql:
     install: '0'
     settings:
@@ -255,7 +305,7 @@ postgresql:
             encoding: UTF8
             version: '9.3'
         server:
-            postgres_password: ''
+            postgres_password: '123'
     databases: {  }
     users: {  }
     grants: {  }
@@ -305,11 +355,11 @@ rabbitmq:
 elastic_search:
     install: '0'
     settings:
-        version: null
+        version: 1.4.1
         java_install: true
 solr:
     install: '0'
     settings:
         version: 4.10.2
-        port: ''
+        port: '8984'
 

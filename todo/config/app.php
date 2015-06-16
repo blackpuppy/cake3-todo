@@ -261,6 +261,25 @@ return [
             'quoteIdentifiers' => false,
             //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
         ],
+
+        /**
+         * The test connection is used during the test suite.
+         */
+        'debug_kit' => [
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Mysql',
+            'persistent' => false,
+            'host' => 'localhost',
+            //'port' => 'nonstandard_port_number',
+            'username' => 'doer',
+            'password' => 'P@55w0rd',
+            'database' => 'debug_kit',
+            'encoding' => 'utf8',
+            'timezone' => 'UTC',
+            'cacheMetadata' => true,
+            'quoteIdentifiers' => false,
+            //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
+        ],
     ],
 
     /**

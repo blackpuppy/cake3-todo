@@ -289,18 +289,26 @@ mysql:
         mysqlnd_5j7bmjugtqmn:
             name: todo
             sql: ''
-        mysqlnd_742rb8r8dles:
+        mysqlnd_db_test_todo:
             name: test_todo
             sql: ''
+        mysqlnd_db_debug_kit:
+            name: debug_kit
+            sql: ''
     grants:
-        mysqlng_jazkol9syu30:
+        mysqlng_todo:
             user: doer
             table: 'todo.*'
             privileges:
                 - ALL
-        mysqlng_abcdefg:
+        mysqlng_test_todo:
             user: doer
             table: 'test_todo.*'
+            privileges:
+                - ALL
+        mysqlng_debug_kit:
+            user: doer
+            table: 'debug_kit.*'
             privileges:
                 - ALL
 postgresql:

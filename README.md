@@ -17,3 +17,5 @@ Steps to get up and running:
 1. Install [Vagrant](http://www.vagrantup.com/downloads.html).
 1. Install [Git](https://git-scm.com/downloads).
 1. In cli, ``cd vagrant`` and then ``vagrant up``.
+1. In your hosts, add ``127.0.0.1  www.todo.local``.
+1. Then in your browser, load ``http://www.todo.local/``.

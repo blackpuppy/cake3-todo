@@ -10,7 +10,7 @@ All 6 posts:
 1. [CakePHP 3 … fully grown (step 5 — Model layer and testing)](http://zenofcoding.com/2014/12/05/cakephp-3-fully-grown-model-layer-and-testing/)
 1. [CakePHP 3 … the app is mature (step 6 — Controller, JSON testing and a little more…)](http://zenofcoding.com/2014/12/07/cakephp-3-the-app-is-mature-step-6-controller-json-testing-and-a-little-more/)
 
-Steps to get up Vagrant VM:
+Steps to get up and running:
 
 1. Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
 1. Install [Ruby](https://www.ruby-lang.org/en/documentation/installation/).

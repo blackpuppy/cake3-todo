@@ -17,9 +17,9 @@ class Initial extends AbstractMigration
         // create the table
         $table = $this->table('todos');
         $table->addColumn('todo', 'string', ['limit' => 200])
-              ->addColumn('created', 'datetime')
-              ->addColumn('updated', 'datetime')
-              ->addColumn('is_done', 'boolean')
+              ->addColumn('created', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
+              ->addColumn('updated', 'datetime', ['null' => true])
+              ->addColumn('is_done', 'boolean', ['default' => '0'])
               ->create();
     }
 }

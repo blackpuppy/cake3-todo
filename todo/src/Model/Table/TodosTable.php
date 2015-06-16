@@ -49,7 +49,7 @@ class TodosTable extends Table {
     return $query
         ->where(['is_done' => $options['status']])
         ->order(['updated' => 'DESC'])
-        ->formatResults(function ($results, $query) {
+        ->formatResults(function ($results) {
           return $results->map(function ($row) {
             $timeCreated = new Time($row->created);
             $timeUpdated = new Time($row->updated);
